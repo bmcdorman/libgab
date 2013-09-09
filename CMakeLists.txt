@@ -6,7 +6,6 @@ set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 set(TEST_DIR ${CMAKE_SOURCE_DIR}/test)
 
 file(GLOB SOURCES ${SRC_DIR}/*.cpp)
-file(GLOB INCLUDES ${INCLUDE_DIR}/*.hpp)
 
 include_directories(${INCLUDE_DIR})
 
@@ -19,3 +18,4 @@ target_link_libraries(gab tinyxml)
 add_subdirectory(${TEST_DIR})
 
 install(TARGETS gab LIBRARY DESTINATION lib)
+install(DIRECTORY ${INCLUDE_DIR}/gab DESTINATION include)

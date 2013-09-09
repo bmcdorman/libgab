@@ -14,9 +14,13 @@
 
 using namespace gab;
 
-class my_chromosome : public byte_chromosome<3>
+class my_chromosome : public chromosome
 {
 public:
+  my_chromosome()
+    : chromosome(3)
+  {}
+  
   value_type &x()
   {
     return (*this)[0];
@@ -48,15 +52,14 @@ public:
   }
 };
 
-template<typename S>
-class my_fitness_evaluator : public real_fitness_evaluator<S>
+class my_fitness_evaluator : public fitness_evaluator
 {
 public:
-  virtual double operator()(const typename S::agent_type &evaluatee) const
+  virtual fitness_evaluator::return_type operator()(const agent &evaluatee) const
   {
-    double dist = 0;
-    typename S::agent_type::chromosome_type c = evaluatee.chromosome();
-    for(std::size_t i = 0; i < S::agent_type::chromosome_type::size; ++i) {
+    fitness_evaluator::return_type dist = 0;
+    const chromosome &c = evaluatee.chromosome();
+    for(std::size_t i = 0; i < c.size(); ++i) {
       dist += c[i] * c[i];
     }
     return sqrt(dist);
@@ -65,22 +68,18 @@ public:
 
 int main(int argc, char *argv[])
 {
-  typedef agent<my_chromosome> my_agent;
-  typedef simulation<my_agent> my_simulation;
-  typedef random_chromosome<my_chromosome> my_random_chromosome;
-  typedef my_fitness_evaluator<my_simulation> my_simulation_fitness_evaluator;
-  
-  my_simulation s;
+  simulation s;
   
   // Add some random agents to simulation
-  my_random_chromosome gen;
+  random_chromosome gen;
+  my_chromosome template_;
   for(std::size_t i = 0; i < 1000; ++i) {
-    s.add_agent(gen());
+    s.add_agent(gen(template_.size()));
   }
   
-  my_simulation_fitness_evaluator eval;
-  typename my_simulation_fitness_evaluator::returns_container_type rets = eval.apply(s.agents());
-  typename my_simulation_fitness_evaluator::returns_container_type::const_iterator it = rets.begin();
+  my_fitness_evaluator eval;
+  typename my_fitness_evaluator::returns_container_type rets = eval.apply(s.agents());
+  typename my_fitness_evaluator::returns_container_type::const_iterator it = rets.begin();
   for(; it != rets.end(); ++it) {
     std::cout << "agent fitness: " << *it << std::endl;
   }

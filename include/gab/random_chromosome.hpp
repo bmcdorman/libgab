@@ -2,24 +2,14 @@
 #define _GAB_RANDOM_CHROMOSOME_HPP_
 
 #include <random>
+#include "chromosome.hpp"
 
 namespace gab
 {
-  template<typename C>
   class random_chromosome
   {
   public:
-    virtual C operator()()
-    {
-      typename C::container_type::size_type size = C::size * sizeof(typename C::value_type);
-      
-      
-      C ret;
-      unsigned char *const data = reinterpret_cast<unsigned char *>(ret.container().data());
-      for(typename C::size_type i = 0; i < C::size; ++i) data[i] = _rng() % 255;
-      
-      return ret;
-    }
+    virtual chromosome operator()(const chromosome::container_type::size_type size);
     
   private:
     std::random_device _rng;

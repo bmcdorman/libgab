@@ -11,22 +11,10 @@
 
 namespace gab
 {
-  template<typename C>
-  class one_point_crossover : public crossover<C>
+  class one_point_crossover : public crossover
   {
   public:
-    virtual C operator()(const C &lhs, const C &rhs)
-    {
-      std::uniform_int_distribution<typename C::size_type> dist(0, C::size);
-      
-      const typename std::uniform_int_distribution<typename C::size_type>::result_type a = dist(_rng);
-      
-      C ret;
-      for(std::size_t i = 0; i < a; ++i) ret[i] = lhs[i];
-      for(std::size_t i = a; i < C::size; ++i) ret[i] = rhs[i];
-      
-      return ret;
-    }
+    virtual chromosome operator()(const chromosome &lhs, const chromosome &rhs);
     
   private:
     std::random_device _rng;

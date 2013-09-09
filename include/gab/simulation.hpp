@@ -7,48 +7,20 @@
 #define _GAB_SIMULATION_HPP_
 
 #include <list>
+#include "agent.hpp"
 
 namespace gab
 {
-  template<typename A>
   class simulation
   {
   public:
-    typedef A agent_type;
-    typedef std::list<agent_type> agents_container_type;
+    typedef std::list<agent> agents_container_type;
 
-    void add_agent(const agent_type &agent)
-    {
-      _agents.push_back(agent);
-    }
-    
-    bool remove_agent(const agent_type &agent)
-    {
-      bool status = false;
-      typename agents_container_type::iterator it = _agents.begin();
-      for(; it != _agents.end(); ++it) {
-        if(*it == agent) {
-          it = _agents.erase(it);
-          status = true;
-        }
-      }
-      return status;
-    }
-    
-    void clear_agents()
-    {
-      _agents.clear();
-    }
-
-    agents_container_type &agents() noexcept
-    {
-      return _agents;
-    }
-    
-    const agents_container_type &agents() const noexcept
-    {
-      return _agents;
-    }
+    void add_agent(const agent &a);
+    bool remove_agent(const agent &a);
+    void clear_agents();
+    agents_container_type &agents() noexcept;
+    const agents_container_type &agents() const noexcept;
     
   private:
     agents_container_type _agents;

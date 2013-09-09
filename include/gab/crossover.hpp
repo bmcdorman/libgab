@@ -10,11 +10,10 @@
 
 namespace gab
 {
-  template<typename C>
   class crossover
   {
   public:
-    virtual C operator()(const C &lhs, const C &rhs) = 0;
+    virtual chromosome operator()(const chromosome &lhs, const chromosome &rhs) = 0;
   };
 }
 

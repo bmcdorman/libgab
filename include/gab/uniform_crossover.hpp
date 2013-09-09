@@ -11,23 +11,10 @@
 
 namespace gab
 {
-  template<typename C>
-  class uniform_crossover : public crossover<C>
+  class uniform_crossover : public crossover
   {
   public:
-    virtual C operator()(const C &lhs, const C &rhs)
-    {
-      C ret;
-      
-      for(typename C::size_type i = 0; i < C::size; ++i) {
-        // FIXME: Why 10? Should we expose this value?
-        const double v = std::generate_canonical<double, 10>(_rng);
-        if(v >= 0.5) ret[i] = lhs[i];
-        else ret[i] = rhs[i];
-      }
-      
-      return ret;
-    }
+    virtual chromosome operator()(const chromosome &lhs, const chromosome &rhs);
     
   private:
     std::random_device _rng;

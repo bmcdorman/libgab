@@ -10,23 +10,16 @@
 
 namespace gab
 {
-  template<typename C>
   class agent
   {
   public:
-    typedef C chromosome_type;
+    agent(const chromosome &c) noexcept;
     
-    agent(const C &chromosome) noexcept
-      : _chromosome(chromosome)
-    {
-    }
+    const chromosome &chromosome() const noexcept;
     
-    const C &chromosome() const noexcept
-    {
-      return _chromosome;
-    }
+    bool operator ==(const agent &rhs) const;
   private:
-    C _chromosome;
+    class chromosome _chromosome;
   };
 }
 

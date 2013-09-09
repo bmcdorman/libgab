@@ -11,25 +11,22 @@
 
 namespace gab
 {
-  template<typename T, typename S>
   class fitness_evaluator
   {
   public:
-    typedef std::list<T> returns_container_type;
+    typedef double return_type;
+    typedef std::list<return_type> returns_container_type;
     
     virtual ~fitness_evaluator() noexcept {}
-    virtual T operator()(const typename S::agent_type &evaluatee) const = 0;
-    virtual returns_container_type apply(const typename S::agents_container_type &evaluatees) const
+    virtual return_type operator()(const agent &evaluatee) const = 0;
+    virtual returns_container_type apply(const std::list<agent> &evaluatees) const
     {
       returns_container_type ret;
-      typename S::agents_container_type::const_iterator it = evaluatees.begin();
+      typename std::list<agent>::const_iterator it = evaluatees.begin();
       for(; it != evaluatees.end(); ++it) ret.push_back((*this)(*it));
       return ret;
     }
   };
-  
-  template<typename A>
-  struct real_fitness_evaluator : public fitness_evaluator<double, A> {};
 }
 
 #endif

@@ -12,7 +12,7 @@
 namespace gab
 {
   template<typename C>
-  class two_point_crossover : public crossover<C>
+  class two_point_crossover : public crossover
   {
   public:
     virtual C operator()(const C &lhs, const C &rhs)
