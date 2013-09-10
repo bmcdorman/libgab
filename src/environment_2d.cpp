@@ -22,7 +22,8 @@ environment_2d::environment_2d(const environment_2d::size_type width, const envi
 environment_2d::environment_2d(const environment_2d &rhs)
   : _width(rhs._width)
   , _height(rhs._height)
-  , _next(1)
+  , _next(rhs._next)
+  , _types(rhs._types)
   , _environment(new environment_2d::handle_type*[_width])
 {
   for(environment_2d::size_type x = 0; x < _width; ++x) {
