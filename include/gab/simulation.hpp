@@ -16,9 +16,9 @@ namespace gab
   public:
     typedef std::list<agent> agents_container_type;
 
-    void add_agent(const agent &a);
-    bool remove_agent(const agent &a);
-    void clear_agents();
+    virtual void add_agent(const agent &a);
+    virtual bool remove_agent(const agent &a);
+    virtual void clear_agents();
     agents_container_type &agents() noexcept;
     const agents_container_type &agents() const noexcept;
     

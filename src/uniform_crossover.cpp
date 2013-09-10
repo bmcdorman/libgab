@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2013, Braden McDorman
+ * All Rights Reserved. Distributed under the terms of the MIT License.
+ */
+
 #include <gab/uniform_crossover.hpp>
 #include <assert.h>
 
