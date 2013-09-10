@@ -10,7 +10,7 @@ using namespace gab;
 environment_2d::environment_2d(const environment_2d::size_type width, const environment_2d::size_type height)
   : _width(width)
   , _height(height)
-  , _next(0)
+  , _next(1)
   , _environment(new environment_2d::handle_type*[_width])
 {
   for(environment_2d::size_type x = 0; x < _width; ++x) {
@@ -62,7 +62,7 @@ environment_2d::hash_type environment_2d::types_hash() const
 {
   // This will in theory correctly identify changes to the type map.
   // 0 is also reserved for users as a "null" value.
-  return (_next << 17) | (_types.size() << 1) | 1;
+  return (_next << 16) | (_types.size() << 0);
 }
 
 bool environment_2d::remove_type(const environment_2d::handle_type type)
