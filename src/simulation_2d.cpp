@@ -4,6 +4,7 @@
  */
 
 #include <gab/simulation_2d.hpp>
+#include <gab/agent_2d.hpp>
 
 using namespace gab;
 
@@ -17,12 +18,29 @@ simulation_2d::simulation_2d(const environment_2d::size_type width, const enviro
 {
 }
 
-const environment_2d &simulation_2d::environment() const noexcept
+void simulation_2d::add_agent(const std::shared_ptr<agent> &a)
 {
-  return _environment;
+  simulation::add_agent(a);
+  dynamic_cast<agent_2d *>(a.get())->environment(&_environment);
+}
+
+bool simulation_2d::remove_agent(const std::shared_ptr<agent> &a)
+{
+  dynamic_cast<agent_2d *>(a.get())->environment(0);
+  return simulation::remove_agent(a);
 }
 
 environment_2d &simulation_2d::environment() noexcept
 {
   return _environment;
+}
+
+const environment_2d &simulation_2d::environment() const noexcept
+{
+  return _environment;
+}
+
+void simulation_2d::environment(const environment_2d &e) noexcept
+{
+  _environment = e;
 }

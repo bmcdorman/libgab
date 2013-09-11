@@ -29,7 +29,16 @@ namespace gab
     const type_map_type &types() const;
     hash_type types_hash() const;
     
+    void fill(const handle_type type);
+    void fill_edges(const handle_type type);
+    void remove_all(const handle_type type);
+    
+    handle_type &at(const size_type x, const size_type y);
+    const handle_type &at(const size_type x, const size_type y) const;
+    
     const handle_type *operator[](const size_type x) const;
+    
+    environment_2d &operator =(const environment_2d &rhs);
     
   private:
     size_type _width;

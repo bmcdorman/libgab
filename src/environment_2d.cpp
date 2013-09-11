@@ -79,8 +79,73 @@ const environment_2d::type_map_type &environment_2d::types() const
   return _types;
 }
 
+void environment_2d::fill(const environment_2d::handle_type type)
+{
+  for(environment_2d::size_type x = 0; x < _width; ++x) {
+    for(environment_2d::size_type y = 0; y < _height; ++y) {
+      _environment[x][y] = type;
+    }
+  }
+}
+
+void environment_2d::fill_edges(const handle_type type)
+{
+  for(environment_2d::size_type x = 0; x < _width; ++x) {
+    _environment[x][0] = type;
+  }
+  for(environment_2d::size_type x = 0; x < _width; ++x) {
+    _environment[x][_height - 1] = type;
+  }
+  for(environment_2d::size_type y = 0; y < _height; ++y) {
+    _environment[0][y] = type;
+  }
+  for(environment_2d::size_type y = 0; y < _height; ++y) {
+    _environment[_width - 1][y] = type;
+  }
+}
+
+void environment_2d::remove_all(const handle_type type)
+{
+  for(environment_2d::size_type x = 0; x < _width; ++x) {
+    for(environment_2d::size_type y = 0; y < _height; ++y) {
+      if(_environment[x][y] == type) _environment[x][y] = environment_2d::handle_type();
+    }
+  }
+}
+
+environment_2d::handle_type &environment_2d::at(const environment_2d::size_type x, const environment_2d::size_type y)
+{
+  // TODO: Bounds checking
+  return _environment[x][y];
+}
+
+const environment_2d::handle_type &environment_2d::at(const environment_2d::size_type x, const environment_2d::size_type y) const
+{
+  // TODO: Bounds checking
+  return _environment[x][y];
+}
+
 const environment_2d::handle_type *environment_2d::operator[](const environment_2d::size_type x) const
 {
   if(x >= _width) throw std::out_of_range("x >= width");
   return _environment[x];
+}
+
+environment_2d &environment_2d::operator =(const environment_2d &rhs)
+{
+  for(environment_2d::size_type x = 0; x < _width; ++x) delete[] _environment[x];
+  delete[] _environment;
+  
+  _width = rhs._width;
+  _height = rhs._height;
+  _next = rhs._next;
+  _types = rhs._types;
+  _environment = new environment_2d::handle_type*[_width];
+  
+  for(environment_2d::size_type x = 0; x < _width; ++x) {
+    _environment[x] = new environment_2d::handle_type[_height];
+    memcpy(_environment[x], rhs._environment[x], _height * sizeof(environment_2d::handle_type));
+  }
+
+  return *this;
 }

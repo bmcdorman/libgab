@@ -7,6 +7,11 @@ chromosome::chromosome(const chromosome::container_type::size_type size)
 {
 }
 
+chromosome::chromosome(const chromosome &other)
+  : _genes(other._genes)
+{
+}
+
 chromosome::value_type &chromosome::operator[](const chromosome::container_type::size_type i)
 {
   return _genes[i];
@@ -40,4 +45,10 @@ bool chromosome::valid() const noexcept
 bool chromosome::operator ==(const chromosome &rhs) const
 {
   return _genes == rhs._genes;
+}
+
+chromosome &chromosome::operator =(const chromosome &rhs)
+{
+  _genes = rhs._genes;
+  return *this;
 }

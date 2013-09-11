@@ -17,6 +17,8 @@ namespace gab
     typedef std::vector<value_type> container_type;
     
     chromosome(const container_type::size_type size);
+    chromosome(const chromosome &other);
+    
     value_type &operator[](const container_type::size_type i);
     const value_type &operator[](const container_type::size_type i) const;
     const container_type &genes() const noexcept;
@@ -24,7 +26,8 @@ namespace gab
     typename container_type::size_type size() const noexcept;
     bool valid() const noexcept;
     
-    bool operator ==(const chromosome &rhs) const;
+    virtual bool operator ==(const chromosome &rhs) const;
+    virtual chromosome &operator =(const chromosome &rhs);
     
   private:
     container_type _genes;

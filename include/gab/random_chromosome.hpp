@@ -9,9 +9,11 @@ namespace gab
   class random_chromosome
   {
   public:
-    virtual chromosome operator()(const chromosome::container_type::size_type size);
+    random_chromosome(const chromosome::container_type::size_type size);
+    virtual chromosome operator()(double min, double max);
     
   private:
+    const chromosome::container_type::size_type _size;
     std::random_device _rng;
   };
 }

@@ -13,11 +13,11 @@ namespace gab
   class agent
   {
   public:
-    agent(const chromosome &c) noexcept;
+    agent(const class chromosome &c) noexcept;
     
-    const chromosome &chromosome() const noexcept;
+    const class chromosome &chromosome() const noexcept;
     
-    bool operator ==(const agent &rhs) const;
+    virtual bool operator ==(const agent &rhs) const;
   private:
     class chromosome _chromosome;
   };
